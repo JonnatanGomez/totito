@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>
+	GATO
+</title>
+<link rel="icon" href="images/iconCat.png">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="game gato" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<!-- bootstrap-css -->
+<link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+<!--// bootstrap-css -->
+<!-- css -->
+<link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
+<link href="css/styles.css?v=1.6" rel="stylesheet">
+<!--// css -->
+<script src="js/jquery-1.11.1.min.js"></script>
+<script src="js/scripts.js?v=1.7"></script>
+<script src="js/bootstrap.js"></script>
+<script type="text/javascript" src="js/move-top.js"></script>
+<script type="text/javascript" src="js/easing.js"></script>
+<script type="text/javascript">
+	jQuery(document).ready(function($) {
+		$(".scroll").click(function(event){		
+			event.preventDefault();
+			$('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
+		});
+	});
+</script>	
+<style>
+	.styleCaja{
+		border: solid
+		black 1px;
+		cursor: pointer;
+		min-height: 150px;
+		text-align: center;
+		line-height: 150px;
+	}
+	.styleImgCaja{
+		width: 33%;
+	}
+</style>
+</head>
+<body>
+	<div class="main-content">
+		<!-- header -->
+		<div class="navigation">
+			<div class="container-wrap-fluid">
+					<nav class="pull">
+						<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+								<ul class="nav navbar-nav">
+									<li class="hvr-bounce-to-bottom"><a href="index.html" class="active">Jugar</a></li>
+								</ul>	
+								<div class="clearfix"> </div>
+							</div>
+					</nav>
+			</div>
+		</div>
+		<div class="header-top">
+				<div class="head-logo">
+					<h1 id="tltModeG1" style="cursor: pointer;" onclick="changeMode()">GATO VS HUMAN</h1>
+					<h1 id="tltModeG2" style="display: none;cursor: pointer;" onclick="changeMode()">HUMAN VS HUMAN</h1>
+				</div>
+				<div class="top-nav">
+					<div class="hero fa-navicon fa-2x nav_slide_button" id="hero">
+						<a href="#"><img src="images/menu.png" alt=""></a>
+					</div>	
+				</div>
+				<div class="header-right">
+					<div class="social">
+						<ul>
+							<li><span>Comer arena humano </span></li>
+						</ul>
+					</div>
+					<div class="clearfix"> </div>
+				</div>				
+				<div class="clearfix"> </div>
+		</div>
+		<!-- //header -->
+		<!-- banner -->
+		<div class="banner">
+			<!-- container-wrap -->
+			<div class="container-wrap-wrap">
+				<div class="col-md-4 banner-img">
+					<img id="imgHuman" src="images/humanDance.gif" alt="" style="display: none;"/>
+					<img id="imgCat" src="images/gato.gif" alt="" />
+				</div>
+				<div class="col-md-8 banner-top-slide">
+					<div class="banner-top-text">
+						<h2 id="btnPlay" style="cursor: pointer;" onclick="startGame()">PLAY</h2>
+						<h2 id="tltMessage" style="display: none;"></h2>
+					</div>
+					<div class="banner-bottom-bottom">
+						<div id="divGame" style="display: none;">
+							<div class="row">
+								<div class="col-md-12">
+									<div id="caja11" class="col-md-4 styleCaja" onclick="setValue(1,1)" style="border-left: none;border-top: none;">
+									</div>
+									<div id="caja12" class="col-md-4 styleCaja" onclick="setValue(1,2)" style="border-top: none;">
+									</div>
+									<div id="caja13" class="col-md-4 styleCaja" onclick="setValue(1,3)" style="border-right: none;border-top: none;">
+									</div>
+								</div>
+								<div class="col-md-12">
+									<div id="caja21" class="col-md-4 styleCaja" onclick="setValue(2,1)" style="border-left: none;">
+									</div>
+									<div id="caja22" class="col-md-4 styleCaja" onclick="setValue(2,2)" >
+									</div>
+									<div id="caja23" class="col-md-4 styleCaja" onclick="setValue(2,3)" style="border-right: none;">
+									</div>
+								</div>
+								<div class="col-md-12">
+									<div id="caja31" class="col-md-4 styleCaja" onclick="setValue(3,1)" style="border-left: none;border-bottom: none;">
+									</div>
+									<div id="caja32" class="col-md-4 styleCaja" onclick="setValue(3,2)" style="border-bottom: none;" >
+									</div>
+									<div id="caja33" class="col-md-4 styleCaja" onclick="setValue(3,3)" style="border-right: none;border-bottom: none;">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+			<!-- //container-wrap -->
+		</div>
+		<!-- //banner -->
+		
+		<!-- //news -->
+		<!-- footer -->
+		<div class="footer">
+			<!-- container-wrap -->
+			<div class="container-wrap">
+				<div class="footer-top">
+						<div class="footer-bottom">
+							
+							<div class="copyright">
+								<p> © 2020 Gato, come arena</p>
+							</div>
+							<div class="clearfix"> </div>
+						</div>
+				</div>
+			</div>
+			<!-- //container-wrap -->
+		</div>
+		<!-- //footer -->
+	</div>
+	<script type="text/javascript">
+		function startGame(){
+			$("#btnPlay").hide();
+			$("#divGame").show();
+		}
+
+		var modeGame = 1;
+
+		var Pnow = 1;
+
+		var vP1Row = [];
+		var vP1Col = [];
+		
+		var vP2Row = [];
+		var vP2Col = [];
+
+		var cajaUses = [];
+		var cajaUsesP1 = [];
+		var cajaUsesP2 = [];
+
+		function setValue(row,col){
+			if(pensandoCat == true){
+				return; 
+			}
+
+			
+			
+			if(cajaUses.includes(row+''+col)){
+				return;
+			}
+
+			if(Pnow == 1){
+				
+				$("#caja"+row+col).html('<img src="images/iconHuman1.png" class="styleImgCaja" />');
+
+				vP1Row.push(row);
+				vP1Col.push(col);
+				cajaUsesP1.push(row+''+col);
+				if(validateWin(vP1Row,vP1Col,cajaUsesP1)){
+					$("#tltMessage").show();
+					if(modeGame==1){
+						$("#tltMessage").html("WIN HUMAN");
+						loseCat();
+					}else{
+						$("#tltMessage").html("WIN HUMAN X");
+					}
+					resetGame();
+					return;
+				}
+			}else{
+				if(modeGame == 1){
+					$("#caja"+row+col).html('<img src="images/iconCat.png" class="styleImgCaja" />');
+				}else{
+					$("#caja"+row+col).html('<img src="images/iconHuman2.jpg" class="styleImgCaja" />');
+				}
+				
+				vP2Row.push(row);
+				vP2Col.push(col);
+				cajaUsesP2.push(row+''+col);
+				if(validateWin(vP2Row,vP2Col,cajaUsesP2)){
+					$("#tltMessage").show();
+					if(modeGame==1){
+						$("#tltMessage").html("WIN CAT");
+						winCat();
+					}else{
+						$("#tltMessage").html("WIN HUMAN 0");
+					}
+					resetGame();
+					return;
+				}
+			}
+
+			cajaUses.push(row+''+col);
+			Pnow = Pnow*-1;
+
+			if(modeGame == 1 && Pnow == -1)
+				moveCat();
+
+			if(cajaUses.length == 9){
+				$("#tltMessage").show();
+				$("#tltMessage").html("DRAW");
+				if(modeGame==1)
+					drawCat();
+				resetGame();
+				return;
+			}
+		}
+
+		var memCat = [];
+		var memCatEnemy = [];
+		var pensandoCat = false;
+
+		function moveCat(){
+
+			console.log(cajaUsesP1);
+			console.log(memCatEnemy);
+
+			var nextMove = '';
+			console.log('Movimiento elegido: '+nextMove);
+			if(nextMove == ''){
+					
+				pensandoCat = true;
+				var colCat = 0;
+				var rowCat = 0;
+				do{
+					colCat = getRandomInt(1,3);
+					rowCat = getRandomInt(1,3);
+				}while(cajaUses.includes(rowCat+''+colCat));
+
+				var timeSleep = getRandomInt(1000,3000)
+				$("#imgCat").attr("src","images/gatoDraw.gif");
+				setTimeout(() => {
+					$("#imgCat").attr("src","images/gato.gif");
+					pensandoCat = false; 
+					setValue(rowCat,colCat);
+				}, timeSleep);
+			}else{
+
+				var rowRem = nextMove.charAt(0);
+				var colRem = nextMove.charAt(1);
+				pensandoCat = true; 
+				var timeSleep = getRandomInt(1000,3000)
+				$("#imgCat").attr("src","images/gatoDraw.gif");
+				setTimeout(() => {
+					$("#imgCat").attr("src","images/gato.gif");
+					pensandoCat = false; 
+					setValue(rowRem,colRem);
+				}, timeSleep);
+			}
+		}
+
+		function winCat(){
+			$("#imgCat").attr("src","images/gatoWin.gif");
+			setTimeout(() => {
+				$("#imgCat").attr("src","images/gato.gif");
+			}, 3000);
+		}
+
+		function loseCat(){
+			$("#imgCat").attr("src","images/gatoLoser.gif");
+			var cajaUsesP1Json = JSON.stringify(cajaUsesP1);
+			memCatEnemy.push(cajaUsesP1Json);
+
+			setTimeout(() => {
+				$("#imgCat").attr("src","images/gato.gif");
+			}, 2000);
+		}
+
+		function drawCat(){
+			$("#imgCat").attr("src","images/gatoDraw.gif");
+			setTimeout(() => {
+				$("#imgCat").attr("src","images/gato.gif");
+			}, 2000);
+		}
+		
+		function getRandomInt(min, max) {
+			min = Math.ceil(min);
+			max = Math.floor(max);
+			return Math.floor(Math.random() * (max - min + 1)) + min;
+		}
+
+		function validateWin(rows,cols,cUses){
+			var resWin = false;
+			rowsRes = rows.reduce((a, c) => (a[c] = (a[c] || 0) + 1, a), Object.create(null));
+
+			for (hay in rowsRes) {
+				if(rowsRes[hay] >= 3){
+					resWin = true;
+				}
+				
+			}
+
+			colsRes = cols.reduce((a, c) => (a[c] = (a[c] || 0) + 1, a), Object.create(null));
+			for (hay in colsRes) {
+				if(colsRes[hay] >= 3){
+					resWin = true;
+				}
+
+			}
+
+			dig = 0;
+			digIn = 0;
+			ii = 3;
+			for(var i = 1; i <= 3; i++){
+				if(cUses.includes(i+''+i)){
+					dig++;
+				}
+				if(cUses.includes(i+''+ii)){
+					digIn++;
+				}
+				ii--;
+			}
+			
+			if(dig == 3 || digIn == 3){
+				resWin = true;
+			}
+
+			return resWin;
+		}
+
+		function resetGame(){			
+			
+			pensandoCat = true;
+			
+			Pnow = 1;
+			vP1Row = [];
+			vP1Col = [];
+			vP2Row = [];
+			vP2Col = [];
+			cajaUses = [];
+			cajaUsesP1 = [];
+			cajaUsesP2 = [];
+
+			
+			setTimeout(() => {
+				pensandoCat=false;
+				for(var i = 1; i <= 3; i++){
+					for(var j = 1; j <= 3; j++){
+						$("#caja"+j+i).html("");
+					}
+				}
+				$("#divGame").hide();
+				$("#tltMessage").hide();
+				$("#btnPlay").show();
+			}, 3000);
+		}	
+		
+		function changeMode(){
+			pensandoCat = false;
+			Pnow = 1;
+			vP1Row = [];
+			vP1Col = [];
+			vP2Row = [];
+			vP2Col = [];
+			cajaUses = [];
+			cajaUsesP1 = [];
+			cajaUsesP2 = [];
+			for(var i = 1; i <= 3; i++){
+				for(var j = 1; j <= 3; j++){
+					$("#caja"+j+i).html("");
+				}
+			}
+			$("#divGame").hide();
+			$("#tltMessage").hide();
+			$("#btnPlay").show();
+			$("#tltModeG1").toggle();
+			$("#tltModeG2").toggle();
+			$("#imgHuman").toggle();
+			$("#imgCat").toggle();
+			modeGame = modeGame*-1;
+		}
+	</script>
+	<script type="text/javascript">
+									$(document).ready(function() {
+										/*
+										var defaults = {
+								  			container-wrapID: 'toTop', // fading element id
+											container-wrapHoverID: 'toTopHover', // fading element hover id
+											scrollSpeed: 1200,
+											easingType: 'linear' 
+								 		};
+										*/
+										
+										$().UItoTop({ easingType: 'easeOutQuart' });
+										
+									});
+								</script>
+									<a href="#" id="toTop" style="display: block;"> <span id="toTopHover" style="opacity: 1;"> </span></a>
+	<!-- content-Get-in-touch -->
+</body>	
+</html>
